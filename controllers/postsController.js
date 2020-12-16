@@ -1,6 +1,9 @@
+const db = require('../database/models');
+
 const controller = {
   listAll: async (req, res) => {
-    res.send('Hello world');
+    const data = await db.Posts.findAll();
+    res.json(data);
   },
 };
 
