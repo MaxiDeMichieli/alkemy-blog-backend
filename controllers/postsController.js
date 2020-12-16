@@ -10,15 +10,15 @@ const controller = {
           { association: 'category' },
         ],
       });
-      const posts = data.map((e) => {
-        const post = {
-          id: e.id,
-          title: e.title,
-          image: e.image,
-          category: e.category.category,
-          creationDate: e.createdAt,
+      const posts = data.map((post) => {
+        const refactoredPost = {
+          id: post.id,
+          title: post.title,
+          image: post.image,
+          category: post.category.category,
+          creationDate: post.createdAt,
         };
-        return post;
+        return refactoredPost;
       });
       responseWithoutError(res, 'Ok', 200, posts);
     } catch (err) {
