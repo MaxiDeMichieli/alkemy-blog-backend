@@ -101,6 +101,23 @@ const controller = {
       withError(res, 'Server error', 500, err);
     }
   },
+  remove: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const data = await db.Posts.destroy({
+        where: {
+          id,
+        },
+      });
+      if (data === 0) {
+        const error = 'There is not any post with this id';
+        throw error;
+      }
+      withoutError(res, 'Post removed', 200);
+    } catch (err) {
+      withError(res, 'Server error', 500, err);
+    }
+  },
 };
 
 module.exports = controller;

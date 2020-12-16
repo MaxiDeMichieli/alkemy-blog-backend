@@ -1,12 +1,12 @@
 const express = require('express');
 const logger = require('morgan');
-
 const postsRouter = require('./routes/posts');
 
 const app = express();
 const PORT = '3030';
 
-app.listen(PORT);
+// eslint-disable-next-line no-console
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 app.use(logger('dev'));
 app.use(express.json());
