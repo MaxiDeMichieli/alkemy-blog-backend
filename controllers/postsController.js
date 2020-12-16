@@ -72,6 +72,35 @@ const controller = {
       withError(res, 'Server error', 500, err);
     }
   },
+  edit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        throw errors.mapped();
+      }
+      const {
+        title, content, image, category,
+      } = req.body;
+      const data = await db.Posts.update({
+        title: title.trim(),
+        content: content.trim(),
+        image,
+        category_id: category,
+      }, {
+        where: {
+          id,
+        },
+      });
+      if (data[0] === 0) {
+        const error = 'There is not any post with this id';
+        throw error;
+      }
+      withoutError(res, 'Post edited', 200);
+    } catch (err) {
+      withError(res, 'Server error', 500, err);
+    }
+  },
 };
 
 module.exports = controller;
