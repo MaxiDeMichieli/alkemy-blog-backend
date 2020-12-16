@@ -17,10 +17,11 @@ module.exports = (sequelize, dataTypes) => {
       allowNull: false,
     },
     image: {
-      type: dataTypes.STRING(100),
+      type: dataTypes.STRING(1000),
     },
     category_id: {
       type: dataTypes.INTEGER(11),
+      allowNull: false,
     },
   };
 
