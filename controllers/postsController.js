@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 const db = require('../database/models');
-const { withError, withoutError } = require('../utils/responses');
+const { responseWithError, responseWithoutError } = require('../utils/responses');
 
 const controller = {
   listAll: async (req, res) => {
@@ -20,9 +20,9 @@ const controller = {
         };
         return post;
       });
-      withoutError(res, 'Ok', 200, posts);
+      responseWithoutError(res, 'Ok', 200, posts);
     } catch (err) {
-      withError(res, 'Server error', 500, err);
+      responseWithError(res, 'Server error', 500, err);
     }
   },
   listOne: async (req, res) => {
@@ -37,7 +37,7 @@ const controller = {
         ],
       });
       if (data === null) {
-        withError(res, 'Post not found', 400, true);
+        responseWithError(res, 'Post not found', 400, true);
       } else {
         const post = {
           id: data.id,
@@ -46,10 +46,10 @@ const controller = {
           category: data.category.category,
           creationDate: data.createdAt,
         };
-        withoutError(res, 'Ok', 200, post);
+        responseWithoutError(res, 'Ok', 200, post);
       }
     } catch (err) {
-      withError(res, 'Server error', 500, err);
+      responseWithError(res, 'Server error', 500, err);
     }
   },
   create: async (req, res) => {
@@ -67,9 +67,9 @@ const controller = {
         image,
         category_id: category,
       });
-      withoutError(res, 'Post created', 200, data.dataValues);
+      responseWithoutError(res, 'Post created', 200, data.dataValues);
     } catch (err) {
-      withError(res, 'Server error', 500, err);
+      responseWithError(res, 'Server error', 500, err);
     }
   },
   edit: async (req, res) => {
@@ -96,9 +96,9 @@ const controller = {
         const error = 'There is not any post with this id';
         throw error;
       }
-      withoutError(res, 'Post edited', 200);
+      responseWithoutError(res, 'Post edited', 200);
     } catch (err) {
-      withError(res, 'Server error', 500, err);
+      responseWithError(res, 'Server error', 500, err);
     }
   },
   remove: async (req, res) => {
@@ -113,9 +113,9 @@ const controller = {
         const error = 'There is not any post with this id';
         throw error;
       }
-      withoutError(res, 'Post removed', 200);
+      responseWithoutError(res, 'Post removed', 200);
     } catch (err) {
-      withError(res, 'Server error', 500, err);
+      responseWithError(res, 'Server error', 500, err);
     }
   },
 };
