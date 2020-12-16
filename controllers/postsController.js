@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const db = require('../database/models');
 const { withError, withoutError } = require('../utils/responses');
 
@@ -53,6 +54,10 @@ const controller = {
   },
   create: async (req, res) => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        throw errors.mapped();
+      }
       const {
         title, content, image, category,
       } = req.body;
