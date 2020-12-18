@@ -65,7 +65,7 @@ const controller = {
     try {
       const { id } = req.params;
       const data = await postsRemove({ id });
-      if (data === 0) {
+      if (!data) {
         const error = 'There is not any post with this id';
         throw boom.badRequest(error);
       }
