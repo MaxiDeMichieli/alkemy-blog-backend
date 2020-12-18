@@ -21,7 +21,7 @@ const controller = {
         };
         return refactoredPost;
       });
-      responseWithoutError(res, 'Ok', 200, posts);
+      responseWithoutError(res, 'Ok', posts);
     } catch (err) {
       next(err);
     }
@@ -47,7 +47,7 @@ const controller = {
           category: data.category.category,
           creationDate: data.createdAt,
         };
-        responseWithoutError(res, 'Ok', 200, post);
+        responseWithoutError(res, 'Ok', post);
       }
     } catch (err) {
       next(err);
@@ -68,7 +68,7 @@ const controller = {
         image,
         category_id: category,
       });
-      responseWithoutError(res, 'Post created', 200, data.dataValues);
+      responseWithoutError(res, 'Post created', data.dataValues);
     } catch (err) {
       next(err);
     }
@@ -97,7 +97,7 @@ const controller = {
         const error = 'There is not any post with this id';
         throw boom.badRequest(error);
       }
-      responseWithoutError(res, 'Post edited', 200);
+      responseWithoutError(res, 'Post edited');
     } catch (err) {
       next(err);
     }
@@ -114,7 +114,7 @@ const controller = {
         const error = 'There is not any post with this id';
         throw boom.badRequest(error);
       }
-      responseWithoutError(res, 'Post removed', 200);
+      responseWithoutError(res, 'Post removed');
     } catch (err) {
       next(err);
     }
