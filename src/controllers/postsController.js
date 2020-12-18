@@ -1,24 +1,16 @@
 const { validationResult } = require('express-validator');
 const boom = require('@hapi/boom');
-const db = require('../database/models');
 const { responseWithoutError, validationErrorHandler } = require('../utils/responses');
+const {
+  refactorPost, postsFindAll, postsFindOne, postsCreate, postsUpdate, postsRemove,
+} = require('../utils/postsManager');
 
 const controller = {
   listAll: async (req, res, next) => {
     try {
-      const data = await db.Posts.findAll({
-        include: [
-          { association: 'category' },
-        ],
-      });
+      const data = await postsFindAll();
       const posts = data.map((post) => {
-        const refactoredPost = {
-          id: post.id,
-          title: post.title,
-          image: post.image,
-          category: post.category.category,
-          creationDate: post.createdAt,
-        };
+        const refactoredPost = refactorPost(post);
         return refactoredPost;
       });
       responseWithoutError(res, 'Ok', posts);
@@ -29,24 +21,11 @@ const controller = {
   listOne: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const data = await db.Posts.findOne({
-        where: {
-          id,
-        },
-        include: [
-          { association: 'category' },
-        ],
-      });
+      const data = await postsFindOne({ id });
       if (data === null) {
         throw boom.badRequest('Post not found');
       } else {
-        const post = {
-          id: data.id,
-          title: data.title,
-          image: data.image,
-          category: data.category.category,
-          creationDate: data.createdAt,
-        };
+        const post = refactorPost(data);
         responseWithoutError(res, 'Ok', post);
       }
     } catch (err) {
@@ -59,15 +38,7 @@ const controller = {
       if (!errors.isEmpty()) {
         throw validationErrorHandler(errors);
       }
-      const {
-        title, content, image, category,
-      } = req.body;
-      const data = await db.Posts.create({
-        title: title.trim(),
-        content: content.trim(),
-        image,
-        category_id: category,
-      });
+      const data = await postsCreate(req.body);
       responseWithoutError(res, 'Post created', data.dataValues);
     } catch (err) {
       next(err);
@@ -80,19 +51,7 @@ const controller = {
       if (!errors.isEmpty()) {
         throw validationErrorHandler(errors);
       }
-      const {
-        title, content, image, category,
-      } = req.body;
-      const data = await db.Posts.update({
-        title: title.trim(),
-        content: content.trim(),
-        image,
-        category_id: category,
-      }, {
-        where: {
-          id,
-        },
-      });
+      const data = await postsUpdate(req.body, { id });
       if (data[0] === 0) {
         const error = 'There is not any post with this id';
         throw boom.badRequest(error);
@@ -105,11 +64,7 @@ const controller = {
   remove: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const data = await db.Posts.destroy({
-        where: {
-          id,
-        },
-      });
+      const data = await postsRemove({ id });
       if (data === 0) {
         const error = 'There is not any post with this id';
         throw boom.badRequest(error);
