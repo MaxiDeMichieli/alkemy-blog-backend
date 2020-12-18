@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./src/app.js"
+    "start": "node ./src/app.js",
+    "lint": "eslint --ignore-path .gitignore ."
   },
   "dependencies": {
     "@hapi/boom": "^9.1.1",
@@ -22,9 +23,6 @@
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-node": "^4.1.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-react-hooks": "^4.0.0"
+    "eslint-plugin-node": "^11.1.0"
   }
 }
