@@ -1,5 +1,7 @@
 const { check } = require('express-validator');
 
+const imageFormats = ['.jpg', '.png'];
+
 const postValidator = [
   check('title')
     .isLength({ min: 1 })
@@ -20,6 +22,13 @@ const postValidator = [
   check('image')
     .isLength({ max: 1000 })
     .withMessage('The image url must be less than 1000 characters'),
+
+  check('image')
+    .custom((value) => {
+      const urlSlice = value.slice(-4);
+      return imageFormats.includes(urlSlice);
+    })
+    .withMessage('The image must be in png or jpg format'),
 
   check('category')
     .isLength({ min: 1 })
