@@ -1,6 +1,4 @@
-module.exports = (sequelize, dataTypes) => {
-  const alias = 'Posts';
-
+const Posts = (sequelize, dataTypes) => {
   const cols = {
     id: {
       type: dataTypes.INTEGER(11),
@@ -31,7 +29,7 @@ module.exports = (sequelize, dataTypes) => {
     underscored: true,
   };
 
-  const Post = sequelize.define(alias, cols, config);
+  const Post = sequelize.define('Posts', cols, config);
 
   Post.associate = (models) => {
     Post.belongsTo(models.Categories, {
@@ -42,3 +40,5 @@ module.exports = (sequelize, dataTypes) => {
 
   return Post;
 };
+
+module.exports = Posts;

@@ -1,6 +1,4 @@
-module.exports = (sequelize, dataTypes) => {
-  const alias = 'Categories';
-
+const Categories = (sequelize, dataTypes) => {
   const cols = {
     id: {
       type: dataTypes.INTEGER(11),
@@ -19,7 +17,7 @@ module.exports = (sequelize, dataTypes) => {
     timestamps: false,
   };
 
-  const Category = sequelize.define(alias, cols, config);
+  const Category = sequelize.define('Categories', cols, config);
 
   Category.associate = (models) => {
     Category.hasMany(models.Posts, {
@@ -30,3 +28,5 @@ module.exports = (sequelize, dataTypes) => {
 
   return Category;
 };
+
+module.exports = Categories;

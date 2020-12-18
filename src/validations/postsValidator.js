@@ -1,6 +1,6 @@
 const { check } = require('express-validator');
 
-module.exports = [
+const postValidator = [
   check('title')
     .isLength({ min: 1 })
     .withMessage('The title id required'),
@@ -25,3 +25,5 @@ module.exports = [
     .isLength({ min: 1 })
     .withMessage('The category is required'),
 ];
+
+module.exports = postValidator;
