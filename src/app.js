@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 const postsRouter = require('./routes/posts');
-const logErrors = require('./middlewares/logErrors');
+const verifyBoom = require('./middlewares/verifyBoom');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/posts', postsRouter);
 
-app.use(logErrors);
+app.use(verifyBoom);
 app.use(errorHandler);
 
 module.exports = app;
