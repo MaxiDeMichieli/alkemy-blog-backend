@@ -1,11 +1,15 @@
 const express = require('express');
 const logger = require('morgan');
+const dotenv = require('dotenv');
+const boom = require('@hapi/boom');
 const postsRouter = require('./routes/posts');
 const verifyBoom = require('./middlewares/verifyBoom');
 const errorHandler = require('./middlewares/errorHandler');
 
+dotenv.config();
+
 const app = express();
-const PORT = '3030';
+const PORT = process.env.PORT || '3030';
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
@@ -14,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/posts', postsRouter);
+app.use('*', (req, res, next) => next(boom.notFound()));
 
 app.use(verifyBoom);
 app.use(errorHandler);
