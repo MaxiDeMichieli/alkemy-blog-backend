@@ -1,6 +1,8 @@
 const db = require('../database/models');
 
-const postsManager = {
+const include = [{ association: 'category' }];
+
+const postServices = {
   refactorPost: (post) => {
     const refactoredPost = {
       id: post.id,
@@ -11,14 +13,6 @@ const postsManager = {
     };
     return refactoredPost;
   },
-  postsFindAll: (where) => {
-    const include = [{ association: 'category' }];
-    return db.Posts.findAll({ where, include });
-  },
-  postsFindOne: (where) => {
-    const include = [{ association: 'category' }];
-    return db.Posts.findOne({ where, include });
-  },
   postToSave: (body) => {
     const data = {
       title: body.title,
@@ -28,9 +22,11 @@ const postsManager = {
     };
     return data;
   },
-  postsCreate: (body) => db.Posts.create(postsManager.postToSave(body)),
-  postsUpdate: (body, where) => db.Posts.update(postsManager.postToSave(body), { where }),
+  postsFindAll: (where) => db.Posts.findAll({ where, include }),
+  postsFindOne: (where) => db.Posts.findOne({ where, include }),
+  postsCreate: (body) => db.Posts.create(postServices.postToSave(body)),
+  postsUpdate: (body, where) => db.Posts.update(postServices.postToSave(body), { where }),
   postsRemove: (where) => db.Posts.destroy({ where }),
 };
 
-module.exports = postsManager;
+module.exports = postServices;

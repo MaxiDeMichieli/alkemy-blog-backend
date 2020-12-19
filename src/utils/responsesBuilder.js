@@ -1,6 +1,6 @@
 const boom = require('@hapi/boom');
 
-const responses = {
+const responsesBuilder = {
   responseWithoutError: (res, message, content) => {
     const response = () => res.status(200).json({ message, error: null, content });
     return response();
@@ -12,4 +12,4 @@ const responses = {
   },
 };
 
-module.exports = responses;
+module.exports = responsesBuilder;

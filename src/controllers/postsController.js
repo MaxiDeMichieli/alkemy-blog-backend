@@ -1,18 +1,15 @@
 const { validationResult } = require('express-validator');
 const boom = require('@hapi/boom');
-const { responseWithoutError, validationErrorHandler } = require('../utils/responses');
+const { responseWithoutError, validationErrorHandler } = require('../utils/responsesBuilder');
 const {
   refactorPost, postsFindAll, postsFindOne, postsCreate, postsUpdate, postsRemove,
-} = require('../utils/postsManager');
+} = require('../utils/postServices');
 
 const controller = {
   listAll: async (req, res, next) => {
     try {
       const data = await postsFindAll();
-      const posts = data.map((post) => {
-        const refactoredPost = refactorPost(post);
-        return refactoredPost;
-      });
+      const posts = data.map(refactorPost);
       responseWithoutError(res, 'Ok', posts);
     } catch (err) {
       next(err);
