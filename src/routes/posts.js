@@ -1,13 +1,16 @@
 const express = require('express');
-const controller = require('../controllers/postsController');
 const postsValidator = require('../validations/postsValidator');
+const asyncMiddleware = require('../middlewares/asyncMiddleware');
+const {
+  listAll, listOne, create, edit, remove,
+} = require('../controllers/postsController');
 
 const router = express.Router();
 
-router.get('/', controller.listAll);
-router.get('/:id', controller.listOne);
-router.post('/', postsValidator, controller.create);
-router.patch('/:id', postsValidator, controller.edit);
-router.delete('/:id', controller.remove);
+router.get('/', asyncMiddleware(listAll));
+router.get('/:id', asyncMiddleware(listOne));
+router.post('/', postsValidator, asyncMiddleware(create));
+router.patch('/:id', postsValidator, asyncMiddleware(edit));
+router.delete('/:id', asyncMiddleware(remove));
 
 module.exports = router;
