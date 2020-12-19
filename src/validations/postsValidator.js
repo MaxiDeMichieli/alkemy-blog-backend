@@ -1,6 +1,7 @@
 const { check } = require('express-validator');
 
-const imageFormats = ['.jpg', '.png'];
+const imageRegex = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png)/;
+const regexTest = (value) => imageRegex.test(value);
 
 const postValidator = [
   check('title')
@@ -20,14 +21,11 @@ const postValidator = [
     .withMessage('The content must be less than 1000 characters'),
 
   check('image')
-    .isLength({ max: 1000 })
-    .withMessage('The image url must be less than 1000 characters'),
+    .isLength({ max: 500 })
+    .withMessage('The image url must be less than 500 characters'),
 
   check('image')
-    .custom((value) => {
-      const urlSlice = value.slice(-4);
-      return imageFormats.includes(urlSlice);
-    })
+    .custom(regexTest)
     .withMessage('The image must be in png or jpg format'),
 
   check('category')

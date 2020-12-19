@@ -15,7 +15,7 @@ const Posts = (sequelize, dataTypes) => {
       allowNull: false,
     },
     image: {
-      type: dataTypes.STRING(1000),
+      type: dataTypes.STRING(500),
     },
     category_id: {
       type: dataTypes.INTEGER(11),
