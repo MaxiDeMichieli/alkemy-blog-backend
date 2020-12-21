@@ -1,6 +1,6 @@
 const { check } = require('express-validator');
 
-const imageRegex = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png)/;
+const imageRegex = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg)/;
 const regexTest = (value) => imageRegex.test(value);
 
 const postValidator = [
@@ -26,7 +26,7 @@ const postValidator = [
 
   check('image')
     .custom(regexTest)
-    .withMessage('The image must be in png or jpg format'),
+    .withMessage('The image must be in png, jpg or jpeg format'),
 
   check('category')
     .isLength({ min: 1 })
