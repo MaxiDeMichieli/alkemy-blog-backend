@@ -27,6 +27,7 @@ const postServices = {
     };
     return data;
   },
+  postsCategories: () => db.Categories.findAll(),
   postsFindAll: (where) => db.Posts.findAll({ where, order, include }),
   postsFindOne: (where) => db.Posts.findOne({ where, include }),
   postsCreate: (body) => db.Posts.create(postServices.postToSave(body)),

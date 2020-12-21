@@ -2,7 +2,7 @@ const { validationResult } = require('express-validator');
 const boom = require('@hapi/boom');
 const { responseWithoutError, validationErrorHandler } = require('../utils/responsesBuilder');
 const {
-  refactorPost, postsFindAll, postsFindOne, postsCreate, postsUpdate, postsRemove,
+  refactorPost, postsFindAll, postsFindOne, postsCreate, postsUpdate, postsRemove, postsCategories,
 } = require('../utils/postServices');
 
 const controller = {
@@ -50,6 +50,10 @@ const controller = {
       throw boom.badRequest(error);
     }
     responseWithoutError(res, 'Post removed');
+  },
+  listCategories: async (req, res) => {
+    const categories = await postsCategories();
+    responseWithoutError(res, 'Ok', categories);
   },
 };
 
