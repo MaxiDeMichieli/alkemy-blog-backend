@@ -15,7 +15,7 @@ const controller = {
     const { id } = req.params;
     const data = await postsFindOne({ id });
     if (data === null) {
-      throw boom.badRequest('Post not found');
+      throw boom.notFound('Post not found');
     } else {
       const post = refactorPost(data);
       responseWithoutError(res, 200, post);
@@ -40,14 +40,14 @@ const controller = {
       const error = 'There is not any post with this id';
       throw boom.badRequest(error);
     }
-    responseWithoutError(res, 201);
+    responseWithoutError(res, 200, req.body);
   },
   remove: async (req, res) => {
     const { id } = req.params;
     const data = await postsRemove({ id });
     if (!data) {
       const error = 'There is not any post with this id';
-      throw boom.badRequest(error);
+      throw boom.notFound(error);
     }
     responseWithoutError(res, 200);
   },
