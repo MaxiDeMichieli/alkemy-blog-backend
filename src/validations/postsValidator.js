@@ -12,13 +12,13 @@ const postValidator = [
     .isLength({ max: 100 })
     .withMessage('The title must be less than 100 characters'),
 
-  check('content')
+  check('body')
     .isLength({ min: 1 })
-    .withMessage('The content is required'),
+    .withMessage('The body is required'),
 
-  check('content')
+  check('body')
     .isLength({ max: 1000 })
-    .withMessage('The content must be less than 1000 characters'),
+    .withMessage('The body must be less than 1000 characters'),
 
   check('image')
     .isLength({ max: 500 })

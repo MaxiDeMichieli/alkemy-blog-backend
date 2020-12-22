@@ -8,7 +8,7 @@ const postServices = {
     const refactoredPost = {
       id: post.id,
       title: post.title,
-      content: post.content,
+      body: post.body,
       image: post.image,
       category: {
         id: post.category_id,
@@ -21,7 +21,7 @@ const postServices = {
   postToSave: (body) => {
     const data = {
       title: body.title,
-      content: body.content,
+      body: body.body,
       image: body.image,
       category_id: body.category,
     };

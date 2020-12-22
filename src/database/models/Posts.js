@@ -10,7 +10,7 @@ const Posts = (sequelize, dataTypes) => {
       type: dataTypes.STRING(100),
       allowNull: false,
     },
-    content: {
+    body: {
       type: dataTypes.STRING(1000),
       allowNull: false,
     },

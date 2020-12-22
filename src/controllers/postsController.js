@@ -9,7 +9,7 @@ const controller = {
   listAll: async (req, res) => {
     const data = await postsFindAll();
     const posts = data.map(refactorPost);
-    responseWithoutError(res, 'Ok', posts);
+    responseWithoutError(res, 200, posts);
   },
   listOne: async (req, res) => {
     const { id } = req.params;
@@ -18,7 +18,7 @@ const controller = {
       throw boom.badRequest('Post not found');
     } else {
       const post = refactorPost(data);
-      responseWithoutError(res, 'Ok', post);
+      responseWithoutError(res, 200, post);
     }
   },
   create: async (req, res) => {
@@ -27,7 +27,7 @@ const controller = {
       throw validationErrorHandler(errors);
     }
     const data = await postsCreate(req.body);
-    responseWithoutError(res, 'Post created', data.dataValues);
+    responseWithoutError(res, 201, data.dataValues);
   },
   edit: async (req, res) => {
     const { id } = req.params;
@@ -40,7 +40,7 @@ const controller = {
       const error = 'There is not any post with this id';
       throw boom.badRequest(error);
     }
-    responseWithoutError(res, 'Post edited');
+    responseWithoutError(res, 201);
   },
   remove: async (req, res) => {
     const { id } = req.params;
@@ -49,11 +49,11 @@ const controller = {
       const error = 'There is not any post with this id';
       throw boom.badRequest(error);
     }
-    responseWithoutError(res, 'Post removed');
+    responseWithoutError(res, 200);
   },
   listCategories: async (req, res) => {
     const categories = await postsCategories();
-    responseWithoutError(res, 'Ok', categories);
+    responseWithoutError(res, 200, categories);
   },
 };
 

@@ -1,8 +1,8 @@
 const boom = require('@hapi/boom');
 
 const responsesBuilder = {
-  responseWithoutError: (res, message, content) => {
-    const response = () => res.status(200).json({ message, error: null, content });
+  responseWithoutError: (res, status, content) => {
+    const response = () => res.status(status).json(content);
     return response();
   },
   validationErrorHandler: (errors) => {
