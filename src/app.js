@@ -6,10 +6,14 @@ const cors = require('cors');
 const postsRouter = require('./routes/posts');
 const verifyBoom = require('./middlewares/verifyBoom');
 const errorHandler = require('./middlewares/errorHandler');
+const dbConectionTest = require('./utils/dbConectionTest');
 
 dotenv.config();
 
 const app = express();
+
+dbConectionTest();
+
 const PORT = process.env.PORT || '3030';
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
