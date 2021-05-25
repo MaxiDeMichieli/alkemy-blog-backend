@@ -3,7 +3,7 @@ const boom = require('@hapi/boom');
 const { responseWithoutError, validationErrorHandler } = require('../utils/responsesBuilder');
 const {
   refactorPost, postsFindAll, postsFindOne, postsCreate, postsUpdate, postsRemove, postsCategories,
-} = require('../utils/postServices');
+} = require('../services/postServices');
 
 const controller = {
   listAll: async (req, res) => {
